@@ -1,23 +1,40 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GuaranteedConsole;
+using GuaranteedConsole.Entities;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
 
 namespace GuaranteedConsole.Test
 {
     [TestClass]
     public class ProgramTest
     {
+        //TODO Find Out How To Run The Tests Better Instead of Repetition
+
         [TestMethod]
         public void TestMethod1()
         {
-            ////Build Object For Program Wide Inputs
-            //ValueObjects.Inputs i = new ValueObjects.Inputs();
+            List<Person> PipeList = RunProgram.Run("PipeDelimited", "gender", "asc", '|');
+            List<Person> PipeList2 = RunProgram.Run("PipeDelimited", "gender", "asc", '|');
+            Assert.AreEqual(PipeList, PipeList2);
+        }
 
-            ////NORMALS List
-            //i.input = "morning, 1, 2, 3";
-            //string aResult1 = OutputOperations.FormatOutput(i).output;
-            //string eResult1 = "eggs, toast, coffee";
-            //Assert.AreEqual(eResult1, aResult1);
+        [TestMethod]
+        public void TestMethod2()
+        {
+            List<Person> CommaList = RunProgram.Run("CommaDelimited", "birth", "asc", ',');
+            List<Person> CommaList2 = RunProgram.Run("CommaDelimited", "birth", "asc", ',');
+            Assert.AreEqual(CommaList, CommaList2);
+        }
+
+        [TestMethod]
+        public void TestMethod3()
+        {
+            List<Person> SpaceList = RunProgram.Run("SpaceDelimited", "lastname", "desc", ' ');
+            List<Person> SpaceList2 = RunProgram.Run("SpaceDelimited", "lastname", "desc", ' ');
+            Assert.AreEqual(SpaceList, SpaceList2);
         }
     }
 }

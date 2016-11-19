@@ -1,11 +1,9 @@
-﻿using System;
+﻿using GuaranteedConsole.Entities;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GuaranteedConsole.Entities;
-using System.IO;
-using System.Text;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
 
 namespace GuaranteedConsole
 {
@@ -13,27 +11,43 @@ namespace GuaranteedConsole
     {
         public static void Main(string[] args)
         {
-            string basePath = AppContext.BaseDirectory;
-            string pipFile = Path.GetFullPath(Path.Combine(basePath, @"..\..\..\TextFiles\PipeDelimited.txt"));
-            string comFile = Path.GetFullPath(Path.Combine(basePath, @"..\..\..\TextFiles\CommaDelimited.txt"));
-            string spaceFile = Path.GetFullPath(Path.Combine(basePath, @"..\..\..\TextFiles\SpaceDelimited.txt"));
-
-            string[] pipes = File.ReadAllLines(pipFile);
-            string[] commas = File.ReadAllLines(comFile);
-            string[] spaces = File.ReadAllLines(spaceFile);
-
-            List<Person> PipeList = ParseFiles(pipes, '|');
-            List<Person> CommaList = ParseFiles(commas, ',');
-            List<Person> SpaceList = ParseFiles(spaces, ' ');
-
-            PipeList.SortByGender();
-            CommaList.SortByBirthDate();
-            SpaceList.SortByLastName();
-
-            ShowOutput(PipeList, "Output 1 - Sorted By Gender");
-            ShowOutput(CommaList, "Output 2 - Sorted By Birth Date Ascending");
-            ShowOutput(SpaceList, "Output 3 - Sorted By Last Name Descending");
+            List<Person> PipeList = RunProgram.Run("PipeDelimited", "gender", "asc", '|');
+            List<Person> CommaList = RunProgram.Run("CommaDelimited", "birth", "asc", ',');
+            List<Person> SpaceList = RunProgram.Run("SpaceDelimited", "lastname", "desc", ' ');
+            
+            RunProgram.ShowOutput(PipeList, "Output 1 - Sorted By Gender");
+            RunProgram.ShowOutput(CommaList, "Output 2 - Sorted By Birth Date Ascending");
+            RunProgram.ShowOutput(SpaceList, "Output 3 - Sorted By Last Name Descending");
             Console.ReadLine();
+        }
+    }
+
+    public static class RunProgram
+    {
+        public static List<Person> Run(string file, string sort, string order, char delimiter)
+        {
+            string basePath = AppContext.BaseDirectory;
+            string document = Path.GetFullPath(Path.Combine(basePath, @"..\..\..\TextFiles\" + file + ".txt"));
+            string[] fileArr = File.ReadAllLines(document);
+            List<Person> documentList = ParseFiles(fileArr, delimiter);
+
+            switch (sort)
+            {
+                case "gender":
+                    {
+                        return documentList.SortByGender(order);
+                    }
+                case "birth":
+                    {
+                        return documentList.SortByBirthDate(order);
+                    }
+                case "lastname":
+                    {
+                        return documentList.SortByLastName(order);
+                    }
+                default:
+                    return null;
+            }
         }
 
         public static List<Person> ParseFiles(string[] file, char type)
@@ -106,7 +120,6 @@ namespace GuaranteedConsole
             return List;
         }
 
-
         public static void ShowOutput(List<Person> person, string type)
         {
             Console.WriteLine();
@@ -133,29 +146,51 @@ namespace GuaranteedConsole
 
     public static class ExtensionMethods
     {
-        public static List<Person> SortByGender(this List<Person> p)
+        public static List<Person> SortByGender(this List<Person> p, string order)
         {
             if (p.Any())
             {
-                p.Sort((p1, p2) => p1.Gender.CompareTo(p2.Gender));
+                if (order == "asc")
+                {
+                    p.Sort((p1, p2) => p1.Gender.CompareTo(p2.Gender));
+                }
+                else if (order == "desc")
+                {
+                    p.Sort((p1, p2) => -1 * p1.Gender.CompareTo(p2.Gender));
+                }
+
             }
             return p;
         }
 
-        public static List<Person> SortByBirthDate(this List<Person> p)
+        public static List<Person> SortByBirthDate(this List<Person> p, string order)
         {
             if (p.Any())
             {
-                p.Sort((p1, p2) => p1.DateOfBirth.CompareTo(p2.DateOfBirth));
+                if (order == "asc")
+                {
+                    p.Sort((p1, p2) => p1.DateOfBirth.CompareTo(p2.DateOfBirth));
+                }
+                else if (order == "desc")
+                {
+                    p.Sort((p1, p2) => -1 * p1.DateOfBirth.CompareTo(p2.DateOfBirth));
+                }
             }
             return p;
         }
 
-        public static List<Person> SortByLastName(this List<Person> p)
+        public static List<Person> SortByLastName(this List<Person> p, string order)
         {
             if (p.Any())
             {
-                p.Sort((p1, p2) => -1 * p1.LastName.CompareTo(p2.LastName));
+                if (order == "asc")
+                {
+                    p.Sort((p1, p2) => p1.LastName.CompareTo(p2.LastName));
+                }
+                else if (order == "desc")
+                {
+                    p.Sort((p1, p2) => -1 * p1.LastName.CompareTo(p2.LastName));
+                }
             }
             return p;
         }
