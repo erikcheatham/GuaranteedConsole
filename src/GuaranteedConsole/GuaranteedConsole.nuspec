@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Cheatham.GuaranteedConsole.TextFileParser</id>
+    <version>1.3</version>
+    <title>GuaranteedConsole</title>
+    <authors>Erik Cheatham</authors>
+    <owners>Erik Cheatham</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Awesome Pipe, Comma, or Space Delimited File Parser (Text Files Put Physically Into Project)</description>
+    <releaseNotes>Refactored For Use With Unit Testing</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>Pipe Comma Space Delimiter Text Files</tags>
+  </metadata>
+</package>

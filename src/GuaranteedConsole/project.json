@@ -18,4 +18,14 @@
       "imports": "dnxcore50"
     }
   }
+
+  //"packOptions": {
+  //  "packageType": "DotnetCliTool"
+  //}
+
+  //"scripts": {
+  //  "postcompile": [
+  //    "dotnet pack --no-build --configuration %compile:Configuration%"
+  //  ]
+  //}
 }
