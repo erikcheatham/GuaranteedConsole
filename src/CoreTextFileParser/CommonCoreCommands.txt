@@ -1,0 +1,15 @@
+//Dotnet Automatic Entity Framework Migrations
+dotnet ef migrations add Rating
+dotnet ef database update
+
+//Publish Self-Contained Application
+dotnet publish –runtime win10-x64
+dotnet publish –runtime osx.10.11-x64
+
+//NuGet Commands For Creating Packages - https://blogs.msdn.microsoft.com/mvpawardprogram/2016/06/28/creating-nuget-packages/
+//Download nuget command line interface and place inside application (CLI)  
+nuget spec
+//Modify New File Created
+//Now Pack Your NuGet Package
+nuget pack
+//With xproj Files You Don't Specify The Project Name After "pack"
