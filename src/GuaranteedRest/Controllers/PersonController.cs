@@ -12,7 +12,7 @@ namespace GuaranteedRest.Controllers
     [Route("api/person")]
     public class PersonController : Controller
     {
-        // GET api/values
+        // GET api/person
         [HttpGet]
         public List<Person> Get()
         {
@@ -20,26 +20,66 @@ namespace GuaranteedRest.Controllers
             //return null;
         }
 
-        // GET api/values/5
+        // GET api/person/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public List<Person> Get(string id)
         {
-            return "value";
+            if (id == "gender")
+            {
+                return ParseFile.Parse("PipeDelimited", "gender", "asc", '|');
+            }
+            else if (id == "birth")
+            {
+                return ParseFile.Parse("CommaDelimited", "birth", "asc", ',');
+            }
+            else if (id == "lastname")
+            {
+                return ParseFile.Parse("SpaceDelimited", "lastname", "desc", ' ');
+            }
+            return null;
         }
 
-        //// POST api/values
-        //[HttpPost]
-        //public void Post([FromBody]string value)
+        //PostMan Sample Request
+        //http://localhost:50507/api/person
+        //Body Type Set To application/json which will add a header to the request for Content-Type: application/json
+
         //{
+        //"FirstName": "George",
+        //"LastName": "Costanza",
+        //"Gender": "Male",
+        //"FavoriteColor": "Orange",
+        //"DateOfBirth": "9/23/1959"
         //}
 
-        //// PUT api/values/5
+        // POST api/person
+        [HttpPost]
+        public IActionResult Post([FromBody]Person newPerson)
+        {
+            if (newPerson == null)
+            {
+                return BadRequest();
+            }
+
+            //Do Not Use Static Method For Posting Data
+            //TODO : Accept Another Parameter For The File Type To Save To
+            CreateNewInTextFile async = new CreateNewInTextFile();
+            if (async.CreateNewRecord("PipeDelimited", newPerson))
+            {
+                return CreatedAtRoute("Get", new { id = "PipeDelimited" });
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        //// PUT api/person/5
         //[HttpPut("{id}")]
         //public void Put(int id, [FromBody]string value)
         //{
         //}
 
-        //// DELETE api/values/5
+        //// DELETE api/person/5
         //[HttpDelete("{id}")]
         //public void Delete(int id)
         //{
