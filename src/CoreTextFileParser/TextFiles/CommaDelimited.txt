@@ -1,0 +1,5 @@
+LastName,FirstName,Gender,FavoriteColor,DateOfBirth
+Cheatham,Erik,Male,Teal,6/13/1987
+Reed,Alexandra,Female,Yellow,6/13/1985
+Robbie,Margot,Female,Red,7/2/1990
+Crowe,Russel,Male,Blue,4/7/1964
