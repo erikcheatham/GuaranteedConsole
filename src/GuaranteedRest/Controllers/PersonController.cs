@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 //using Cheatham.GuaranteedConsole.TextFileParser;
+using CoreTextFileParser;
+using CoreTextFileParser.Entities;
 
 namespace GuaranteedRest.Controllers
 {
@@ -12,10 +14,10 @@ namespace GuaranteedRest.Controllers
     {
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<Person> Get()
         {
-            //return RunProgram.Run("PipeDelimited", "gender", "asc", '|');
-            return new string[] { "value1", "value2" };
+            return ParseFile.Parse("PipeDelimited", "gender", "asc", '|');
+            //return null;
         }
 
         // GET api/values/5
