@@ -2,17 +2,18 @@
 <package>
   <metadata>
     <id>Cheatham.GuaranteedConsole.TextFileParser</id>
-    <version>1.4</version>
+    <version>1.5</version>
     <title>GuaranteedConsole</title>
     <authors>Erik Cheatham</authors>
     <owners>Erik Cheatham</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Awesome Pipe, Comma, or Space Delimited File Parser (Text Files Put Physically Into Project)</description>
-    <releaseNotes>Changed To Class Library</releaseNotes>
+    <releaseNotes>Added Class For Posting From Web API For Adding A New Record</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>Pipe Comma Space Delimiter Text Files</tags>
   </metadata>
   <files>
-    <file src="bin\Release\netstandard1.6\CoreTextFileParser.dll" target="lib" />
+    <file src="bin\Debug\netstandard1.6\CoreTextFileParser.dll" target="lib\netcore\Debug\CoreTextFileParser.dll" />
+    <file src="bin\Release\netstandard1.6\CoreTextFileParser.dll" target="lib\netcore\Release\CoreTextFileParser.dll" />
   </files>
 </package>
